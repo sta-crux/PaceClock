@@ -13,6 +13,41 @@ class SettingsViewDrawer(private val mainContext: AppCompatActivity) {
     fun drawSettingsPage() {
         setClockFaceSettingToggles()
         setSoundSetToggles()
+        setSetsCounterVisibilityToggles()
+    }
+
+    private fun setSetsCounterVisibilityToggles() {
+        val setsCounterVisible =
+            mainContext.findViewById<FrameLayout>(R.id.setsCounterDisplayOnToggle)
+        val setsCounterInvisible =
+            mainContext.findViewById<FrameLayout>(R.id.setsCounterDisplayOffToggle)
+
+        setsCounterVisible.alpha =
+            if (ServiceProvider.settingsService.isSetsCounterEnabled()) 1f else .2f
+        setsCounterInvisible.alpha =
+            if (ServiceProvider.settingsService.isSetsCounterEnabled()) .2f else 1f
+
+        setsCounterVisible.setOnClickListener {
+            ServiceProvider.settingsService.changeSetsCounterVisibility(true)
+            setsCounterVisible.alpha =
+                if (ServiceProvider.settingsService.isSetsCounterEnabled()) 1f else .2f
+            setsCounterInvisible.alpha =
+                if (ServiceProvider.settingsService.isSetsCounterEnabled()) .2f else 1f
+            MainViewDrawer(mainContext).setsVisibility()
+            Toast.makeText(mainContext, "The sets counter is now visible.", Toast.LENGTH_SHORT)
+                .show()
+        }
+        setsCounterInvisible.setOnClickListener {
+            ServiceProvider.settingsService.changeSetsCounterVisibility(false)
+            setsCounterVisible.alpha =
+                if (ServiceProvider.settingsService.isSetsCounterEnabled()) 1f else .2f
+            setsCounterInvisible.alpha =
+                if (ServiceProvider.settingsService.isSetsCounterEnabled()) .2f else 1f
+            MainViewDrawer(mainContext).setsVisibility()
+            Toast.makeText(mainContext, "The sets counter is now hidden.", Toast.LENGTH_SHORT)
+                .show()
+        }
+
     }
 
     private fun setSoundSetToggles() {
@@ -53,14 +88,22 @@ class SettingsViewDrawer(private val mainContext: AppCompatActivity) {
             pianoNotesToggle.alpha = 1f
             effectsToggle.alpha = .2f
             ServiceProvider.settingsService.changeSoundSet(SoundSet.NOTES)
-            Toast.makeText(mainContext, "A piano note will be played each 15 seconds.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                mainContext,
+                "A piano note will be played each 15 seconds.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
         effectsToggle.setOnClickListener {
             noSoundToggle.alpha = .2f
             pianoNotesToggle.alpha = .2f
             effectsToggle.alpha = 1f
             ServiceProvider.settingsService.changeSoundSet(SoundSet.EFFECTS)
-            Toast.makeText(mainContext, "A sound will be played each 15 seconds.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                mainContext,
+                "A sound will be played each 15 seconds.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

@@ -9,11 +9,13 @@ import com.stacrux.paceclock.service.SettingsService
 /**
  * Implementation of SettingsService based upon the shared preferences
  */
-class SettingsServiceSharedPreferencesImpl(private val mainContext: AppCompatActivity) : SettingsService {
+class SettingsServiceSharedPreferencesImpl(private val mainContext: AppCompatActivity) :
+    SettingsService {
 
     private val sharedPreferences = mainContext.getSharedPreferences("MyPreferences", MODE_PRIVATE)
     private val clockFaceSettingsIdentifier = "clockFace"
     private val soundSetIdentifier = "soundSet"
+    private val setsCounterVisibilityIdentifier = "setsCounterVisibile"
 
     override fun getClockFace(): ClockFace {
         val clockFacePref =
@@ -50,5 +52,14 @@ class SettingsServiceSharedPreferencesImpl(private val mainContext: AppCompatAct
     override fun isSoundEnabled(): Boolean {
         val soundSet = getSoundSet()
         return soundSet != SoundSet.NONE
+    }
+
+    override fun isSetsCounterEnabled(): Boolean {
+        return sharedPreferences.getBoolean(setsCounterVisibilityIdentifier, true)
+    }
+
+    override fun changeSetsCounterVisibility(isVisible: Boolean) {
+        sharedPreferences.edit().putBoolean(setsCounterVisibilityIdentifier, isVisible)
+            .apply()
     }
 }

@@ -3,22 +3,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/clockFace"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/black_clock_template" />
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/clockHandles"
+            <ImageView
+                android:id="@+id/clockFace"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/white_clock_template" />
+
+            <ImageView
+                android:id="@+id/clockHandles"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/cross" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/setsCounter"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/cross" />
-    </FrameLayout>
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:gravity="center"
+            android:text="SETS: 0"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,4 +15,8 @@ interface SettingsService {
 
     fun isSoundEnabled(): Boolean
 
+    fun isSetsCounterEnabled(): Boolean
+
+    fun changeSetsCounterVisibility(isVisible: Boolean)
+
 }
