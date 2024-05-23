@@ -118,8 +118,8 @@ class SettingsViewDrawer(private val mainContext: AppCompatActivity) {
             }
 
             ClockFace.BLACK -> {
-                whiteToggle.alpha = 1f
-                blackToggle.alpha = .2f
+                whiteToggle.alpha = .2f
+                blackToggle.alpha = 1f
             }
         }
         whiteToggle.setOnClickListener {
