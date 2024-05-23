@@ -108,33 +108,52 @@ class SettingsViewDrawer(private val mainContext: AppCompatActivity) {
     }
 
     private fun setClockFaceSettingToggles() {
+
         val whiteToggle = mainContext.findViewById<FrameLayout>(R.id.settingsClockFaceWhiteToggle)
         val blackToggle = mainContext.findViewById<FrameLayout>(R.id.settingsClockFaceBlackToggle)
+        val modernToggle = mainContext.findViewById<FrameLayout>(R.id.settingsClockFaceModernToggle)
         val clockFace = ServiceProvider.settingsService.getClockFace()
+        highlightClockFace(clockFace)
+
+        whiteToggle.setOnClickListener {
+            ServiceProvider.settingsService.changeClockFace(ClockFace.WHITE)
+            highlightClockFace(ClockFace.WHITE)
+            MainViewDrawer(mainContext).setClockFace()
+        }
+        blackToggle.setOnClickListener {
+            ServiceProvider.settingsService.changeClockFace(ClockFace.BLACK)
+            highlightClockFace(ClockFace.BLACK)
+            MainViewDrawer(mainContext).setClockFace()
+        }
+        modernToggle.setOnClickListener {
+            ServiceProvider.settingsService.changeClockFace(ClockFace.MODERN)
+            highlightClockFace(ClockFace.MODERN)
+            MainViewDrawer(mainContext).setClockFace()
+        }
+    }
+
+    private fun highlightClockFace(clockFace: ClockFace) {
+        val whiteToggle = mainContext.findViewById<FrameLayout>(R.id.settingsClockFaceWhiteToggle)
+        val blackToggle = mainContext.findViewById<FrameLayout>(R.id.settingsClockFaceBlackToggle)
+        val modernToggle = mainContext.findViewById<FrameLayout>(R.id.settingsClockFaceModernToggle)
         when (clockFace) {
             ClockFace.WHITE -> {
                 whiteToggle.alpha = 1f
                 blackToggle.alpha = .2f
+                modernToggle.alpha = .2f
             }
 
             ClockFace.BLACK -> {
                 whiteToggle.alpha = .2f
                 blackToggle.alpha = 1f
+                modernToggle.alpha = .2f
+            }
+
+            ClockFace.MODERN -> {
+                whiteToggle.alpha = .2f
+                blackToggle.alpha = .2f
+                modernToggle.alpha = 1f
             }
         }
-        whiteToggle.setOnClickListener {
-            ServiceProvider.settingsService.changeClockFace(ClockFace.WHITE)
-            whiteToggle.alpha = 1f
-            blackToggle.alpha = .2f
-            MainViewDrawer(mainContext).setClockFace()
-        }
-        blackToggle.setOnClickListener {
-            ServiceProvider.settingsService.changeClockFace(ClockFace.BLACK)
-            whiteToggle.alpha = .2f
-            blackToggle.alpha = 1f
-            MainViewDrawer(mainContext).setClockFace()
-        }
     }
-
-
 }

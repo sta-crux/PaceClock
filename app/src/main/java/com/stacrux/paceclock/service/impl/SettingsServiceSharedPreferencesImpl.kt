@@ -26,6 +26,9 @@ class SettingsServiceSharedPreferencesImpl(private val mainContext: AppCompatAct
         if (ClockFace.BLACK.name == clockFacePref) {
             return ClockFace.BLACK
         }
+        if (ClockFace.MODERN.name == clockFacePref) {
+            return ClockFace.MODERN
+        }
         // default in case of not found
         return ClockFace.WHITE
     }

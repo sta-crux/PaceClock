@@ -40,7 +40,7 @@ class MainViewDrawer(private val mainContext: AppCompatActivity) {
             when (clockFace) {
                 ClockFace.WHITE -> R.drawable.white_clock_template
                 ClockFace.BLACK -> R.drawable.black_clock_template
-                else -> R.drawable.white_clock_template
+                ClockFace.MODERN -> R.drawable.modern_clock_template
             }
         )
         paceClock.setOnClickListener {
