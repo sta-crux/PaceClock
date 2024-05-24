@@ -2,6 +2,7 @@ package com.stacrux.paceclock.service.impl
 
 import android.content.Context.MODE_PRIVATE
 import androidx.appcompat.app.AppCompatActivity
+import com.stacrux.paceclock.model.ChosenOrientation
 import com.stacrux.paceclock.model.ClockFace
 import com.stacrux.paceclock.model.SoundSet
 import com.stacrux.paceclock.service.SettingsService
@@ -16,6 +17,7 @@ class SettingsServiceSharedPreferencesImpl(private val mainContext: AppCompatAct
     private val clockFaceSettingsIdentifier = "clockFace"
     private val soundSetIdentifier = "soundSet"
     private val setsCounterVisibilityIdentifier = "setsCounterVisibile"
+    private val chosenOrientationIdentifier = "chosenOrientation"
 
     override fun getClockFace(): ClockFace {
         val clockFacePref =
@@ -63,6 +65,21 @@ class SettingsServiceSharedPreferencesImpl(private val mainContext: AppCompatAct
 
     override fun changeSetsCounterVisibility(isVisible: Boolean) {
         sharedPreferences.edit().putBoolean(setsCounterVisibilityIdentifier, isVisible)
+            .apply()
+    }
+
+    override fun getChosenOrientation(): ChosenOrientation {
+        val orientation =
+            sharedPreferences.getString(soundSetIdentifier, ChosenOrientation.PORTRAIT.name)
+        if (orientation == ChosenOrientation.LANDSCAPE.name) {
+            return ChosenOrientation.LANDSCAPE
+        }
+        return ChosenOrientation.LANDSCAPE
+    }
+
+    override fun changeChosenOrientation(chosenOrientation: ChosenOrientation) {
+        sharedPreferences.edit()
+            .putString(chosenOrientationIdentifier, ChosenOrientation.PORTRAIT.name)
             .apply()
     }
 }

@@ -7,11 +7,13 @@ import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.stacrux.paceclock.R
 import com.stacrux.paceclock.ServiceProvider
+import com.stacrux.paceclock.model.ChosenOrientation
 import com.stacrux.paceclock.model.ClockFace
 import org.w3c.dom.Text
 
@@ -20,7 +22,12 @@ class MainViewDrawer(private val mainContext: AppCompatActivity) {
     private var setsCounterInt: Int = 0
 
     fun setupMainView() {
-        resizePanelsToScreenWidth()
+        val chosenOrientation = ServiceProvider.settingsService.getChosenOrientation()
+        if (chosenOrientation == ChosenOrientation.PORTRAIT) {
+            resizePanelsToScreenWidth()
+        } else {
+            resizePanelsToScreenHeight()
+        }
         setClockFace()
         setsVisibility()
         val clockHandles = mainContext.findViewById<ImageView>(R.id.clockHandles)
@@ -30,7 +37,8 @@ class MainViewDrawer(private val mainContext: AppCompatActivity) {
 
     fun setsVisibility() {
         val setsLayout = mainContext.findViewById<TextView>(R.id.setsCounter)
-        setsLayout.visibility = if (ServiceProvider.settingsService.isSetsCounterEnabled()) View.VISIBLE else View.INVISIBLE
+        setsLayout.visibility =
+            if (ServiceProvider.settingsService.isSetsCounterEnabled()) View.VISIBLE else View.INVISIBLE
     }
 
     fun setClockFace() {
@@ -55,6 +63,32 @@ class MainViewDrawer(private val mainContext: AppCompatActivity) {
             true
         }
     }
+
+    private fun resizePanelsToScreenHeight() {
+        val windowMetrics = mainContext.windowManager.currentWindowMetrics
+        val screenHeight = windowMetrics.bounds.height()
+        // Find the two main LinearLayouts
+        val paceClockLayout = mainContext.findViewById<LinearLayout>(R.id.paceClockLayout)
+        val settingsLayout = mainContext.findViewById<LinearLayout>(R.id.settingsLayout)
+
+        // Set width of LinearLayouts to screen width
+        val layoutParamsDailyView = paceClockLayout.layoutParams as FrameLayout.LayoutParams
+        layoutParamsDailyView.height = screenHeight
+        paceClockLayout.layoutParams = layoutParamsDailyView
+
+        val layoutParamsCalendarView = settingsLayout.layoutParams as FrameLayout.LayoutParams
+        layoutParamsCalendarView.height = screenHeight
+        layoutParamsCalendarView.bottomMargin = screenHeight
+        settingsLayout.layoutParams = layoutParamsCalendarView
+
+
+        val mainView =
+            mainContext.findViewById<ScrollView>(R.id.mainHorizontalScroll)
+        mainView.post {
+            mainView.smoothScrollTo(0, 0)
+        }
+    }
+
 
     private fun resizePanelsToScreenWidth() {
         val windowMetrics = mainContext.windowManager.currentWindowMetrics
@@ -86,11 +120,16 @@ class MainViewDrawer(private val mainContext: AppCompatActivity) {
      * Color status and nav bar according to the App background color
      */
     private fun setAndroidSystemBarsColor(mainContext: AppCompatActivity) {
-        val backgroundColor =
+        val chosenOrientation = ServiceProvider.settingsService.getChosenOrientation()
+        val backgroundColor = if (chosenOrientation == ChosenOrientation.PORTRAIT) {
             (mainContext.findViewById<HorizontalScrollView>(R.id.mainHorizontalScroll).background as? ColorDrawable)?.color
-        mainContext.window.navigationBarColor = backgroundColor ?: Color.BLACK
+        } else {
+            (mainContext.findViewById<ScrollView>(R.id.mainHorizontalScroll).background as? ColorDrawable)?.color
 
-        val topColor = (mainContext.findViewById<Toolbar>(R.id.topToolBar).background as? ColorDrawable)?.color
+        }
+        mainContext.window.navigationBarColor = backgroundColor ?: Color.BLACK
+        val topColor =
+            (mainContext.findViewById<Toolbar>(R.id.topToolBar).background as? ColorDrawable)?.color
         mainContext.window.statusBarColor = topColor ?: Color.BLACK
     }
 

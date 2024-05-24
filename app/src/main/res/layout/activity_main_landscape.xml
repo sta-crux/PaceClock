@@ -8,20 +8,20 @@
     tools:context=".MainActivity">
 
 
-    <com.stacrux.paceclock.ui.DelayedHorizontalScrollView
+    <com.stacrux.paceclock.ui.DelayedVerticalScrollView
         android:id="@+id/mainHorizontalScroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimaryLight">
 
         <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
 
             <LinearLayout
                 android:id="@+id/paceClockLayout"
-                android:layout_width="500dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.Toolbar
@@ -37,15 +37,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1">
-                    <include layout="@layout/pace_clock" />
+                    <include layout="@layout/pace_clock_landscape" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/settingsLayout"
-                android:layout_width="500dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="1000dp"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_marginTop="1000dp"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.Toolbar
@@ -68,7 +68,7 @@
         </FrameLayout>
 
 
-    </com.stacrux.paceclock.ui.DelayedHorizontalScrollView>
+    </com.stacrux.paceclock.ui.DelayedVerticalScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

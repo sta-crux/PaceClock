@@ -11,10 +11,11 @@
         <TextClock
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".1"
-            android:textSize="33sp"
+            android:layout_weight=".15"
+            android:textSize="40sp"
             android:gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/ds_digital"
             android:format12Hour="hh:mm:ss a"
             android:format24Hour="HH:mm:ss" />
 

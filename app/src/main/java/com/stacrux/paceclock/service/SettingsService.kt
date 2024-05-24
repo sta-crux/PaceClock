@@ -1,6 +1,7 @@
 package com.stacrux.paceclock.service
 
 import com.stacrux.paceclock.model.ClockFace
+import com.stacrux.paceclock.model.ChosenOrientation
 import com.stacrux.paceclock.model.SoundSet
 
 interface SettingsService {
@@ -18,5 +19,9 @@ interface SettingsService {
     fun isSetsCounterEnabled(): Boolean
 
     fun changeSetsCounterVisibility(isVisible: Boolean)
+
+    fun getChosenOrientation(): ChosenOrientation
+
+    fun changeChosenOrientation(chosenOrientation: ChosenOrientation)
 
 }
