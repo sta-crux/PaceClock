@@ -1,10 +1,15 @@
 package com.stacrux.paceclock.ui
 
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.TooltipCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.stacrux.paceclock.R
 import com.stacrux.paceclock.ServiceProvider
+import com.stacrux.paceclock.model.ChosenDisplayMode
 import com.stacrux.paceclock.model.ClockFace
 import com.stacrux.paceclock.model.SoundSet
 
@@ -14,6 +19,43 @@ class SettingsViewDrawer(private val mainContext: AppCompatActivity) {
         setClockFaceSettingToggles()
         setSoundSetToggles()
         setSetsCounterVisibilityToggles()
+        setOrientationToggles()
+        val exitAppButton = mainContext.findViewById<FloatingActionButton>(R.id.exitAppButton)
+        exitAppButton.setOnClickListener {
+            mainContext.finish()
+        }
+    }
+
+    private fun setOrientationToggles() {
+        val portraitToggle = mainContext.findViewById<FrameLayout>(R.id.portraitOriToggle)
+        val landscapeToggle = mainContext.findViewById<FrameLayout>(R.id.landscapeOriToggle)
+        val chosenOrientation = ServiceProvider.settingsService.getChosenOrientation()
+        if (chosenOrientation == ChosenDisplayMode.DEFAULT_PORTRAIT) {
+            portraitToggle.alpha = 1f
+            landscapeToggle.alpha = .2f
+        } else {
+            portraitToggle.alpha = .2f
+            landscapeToggle.alpha = 1f
+        }
+        portraitToggle.setOnClickListener {
+            ServiceProvider.settingsService.changeChosenOrientation(ChosenDisplayMode.DEFAULT_PORTRAIT)
+            portraitToggle.alpha = 1f
+            landscapeToggle.alpha = .2f
+            Toast.makeText(
+                mainContext,
+                "The default view will be applied at the next app restart.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        landscapeToggle.setOnClickListener {
+            ServiceProvider.settingsService.changeChosenOrientation(ChosenDisplayMode.IMMERSIVE)
+            portraitToggle.alpha = .2f
+            landscapeToggle.alpha = 1f
+            val settingsLayout = mainContext.findViewById<LinearLayout>(R.id.settingsLayout)
+            Toast.makeText(mainContext, "Immersive mode will be applied at the next app restart.", Toast.LENGTH_SHORT)
+                .show()
+            Snackbar.make(settingsLayout, "INFO: Only the PACE CLOCK will be displayed.", Snackbar.LENGTH_LONG).show()
+        }
     }
 
     private fun setSetsCounterVisibilityToggles() {

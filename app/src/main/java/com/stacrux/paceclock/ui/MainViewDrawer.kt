@@ -13,9 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.stacrux.paceclock.R
 import com.stacrux.paceclock.ServiceProvider
-import com.stacrux.paceclock.model.ChosenOrientation
+import com.stacrux.paceclock.model.ChosenDisplayMode
 import com.stacrux.paceclock.model.ClockFace
-import org.w3c.dom.Text
 
 class MainViewDrawer(private val mainContext: AppCompatActivity) {
 
@@ -23,7 +22,7 @@ class MainViewDrawer(private val mainContext: AppCompatActivity) {
 
     fun setupMainView() {
         val chosenOrientation = ServiceProvider.settingsService.getChosenOrientation()
-        if (chosenOrientation == ChosenOrientation.PORTRAIT) {
+        if (chosenOrientation == ChosenDisplayMode.DEFAULT_PORTRAIT) {
             resizePanelsToScreenWidth()
         } else {
             resizePanelsToScreenHeight()
@@ -72,14 +71,14 @@ class MainViewDrawer(private val mainContext: AppCompatActivity) {
         val settingsLayout = mainContext.findViewById<LinearLayout>(R.id.settingsLayout)
 
         // Set width of LinearLayouts to screen width
-        val layoutParamsDailyView = paceClockLayout.layoutParams as FrameLayout.LayoutParams
-        layoutParamsDailyView.height = screenHeight
-        paceClockLayout.layoutParams = layoutParamsDailyView
+        val layoutParamsPaceClockView = paceClockLayout.layoutParams as FrameLayout.LayoutParams
+        layoutParamsPaceClockView.height = screenHeight
+        paceClockLayout.layoutParams = layoutParamsPaceClockView
 
-        val layoutParamsCalendarView = settingsLayout.layoutParams as FrameLayout.LayoutParams
-        layoutParamsCalendarView.height = screenHeight
-        layoutParamsCalendarView.bottomMargin = screenHeight
-        settingsLayout.layoutParams = layoutParamsCalendarView
+        val layoutParamsSettingsView = settingsLayout.layoutParams as FrameLayout.LayoutParams
+        layoutParamsSettingsView.height = screenHeight
+        layoutParamsSettingsView.topMargin = screenHeight
+        settingsLayout.layoutParams = layoutParamsSettingsView
 
 
         val mainView =
@@ -121,7 +120,7 @@ class MainViewDrawer(private val mainContext: AppCompatActivity) {
      */
     private fun setAndroidSystemBarsColor(mainContext: AppCompatActivity) {
         val chosenOrientation = ServiceProvider.settingsService.getChosenOrientation()
-        val backgroundColor = if (chosenOrientation == ChosenOrientation.PORTRAIT) {
+        val backgroundColor = if (chosenOrientation == ChosenDisplayMode.DEFAULT_PORTRAIT) {
             (mainContext.findViewById<HorizontalScrollView>(R.id.mainHorizontalScroll).background as? ColorDrawable)?.color
         } else {
             (mainContext.findViewById<ScrollView>(R.id.mainHorizontalScroll).background as? ColorDrawable)?.color
@@ -129,8 +128,8 @@ class MainViewDrawer(private val mainContext: AppCompatActivity) {
         }
         mainContext.window.navigationBarColor = backgroundColor ?: Color.BLACK
         val topColor =
-            (mainContext.findViewById<Toolbar>(R.id.topToolBar).background as? ColorDrawable)?.color
-        mainContext.window.statusBarColor = topColor ?: Color.BLACK
+            (mainContext.findViewById<Toolbar>(R.id.topToolBar)?.background as? ColorDrawable)?.color
+        mainContext.window.statusBarColor = topColor ?: mainContext.window.navigationBarColor
     }
 
 

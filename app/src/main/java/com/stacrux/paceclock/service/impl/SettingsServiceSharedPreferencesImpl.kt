@@ -2,7 +2,7 @@ package com.stacrux.paceclock.service.impl
 
 import android.content.Context.MODE_PRIVATE
 import androidx.appcompat.app.AppCompatActivity
-import com.stacrux.paceclock.model.ChosenOrientation
+import com.stacrux.paceclock.model.ChosenDisplayMode
 import com.stacrux.paceclock.model.ClockFace
 import com.stacrux.paceclock.model.SoundSet
 import com.stacrux.paceclock.service.SettingsService
@@ -68,18 +68,18 @@ class SettingsServiceSharedPreferencesImpl(private val mainContext: AppCompatAct
             .apply()
     }
 
-    override fun getChosenOrientation(): ChosenOrientation {
+    override fun getChosenOrientation(): ChosenDisplayMode {
         val orientation =
-            sharedPreferences.getString(soundSetIdentifier, ChosenOrientation.PORTRAIT.name)
-        if (orientation == ChosenOrientation.LANDSCAPE.name) {
-            return ChosenOrientation.LANDSCAPE
+            sharedPreferences.getString(chosenOrientationIdentifier, ChosenDisplayMode.DEFAULT_PORTRAIT.name)
+        if (orientation == ChosenDisplayMode.IMMERSIVE.name) {
+            return ChosenDisplayMode.IMMERSIVE
         }
-        return ChosenOrientation.LANDSCAPE
+        return ChosenDisplayMode.DEFAULT_PORTRAIT
     }
 
-    override fun changeChosenOrientation(chosenOrientation: ChosenOrientation) {
+    override fun changeChosenOrientation(chosenDisplayMode: ChosenDisplayMode) {
         sharedPreferences.edit()
-            .putString(chosenOrientationIdentifier, ChosenOrientation.PORTRAIT.name)
+            .putString(chosenOrientationIdentifier, chosenDisplayMode.name)
             .apply()
     }
 }
