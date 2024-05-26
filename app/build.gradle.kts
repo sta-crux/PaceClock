@@ -4,15 +4,15 @@ plugins {
 }
 
 android {
-    namespace = "com.stacrux.paceclock"
+    namespace = "com.sta.crux.paceclock"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.stacrux.paceclock"
-        minSdk = 30
+        applicationId = "com.sta.crux.paceclock"
+        minSdk = 29
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2024526
+        versionName = "2024526"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,5 +45,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
 }

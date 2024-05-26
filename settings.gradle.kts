@@ -19,5 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Pace Clock"
+rootProject.name = "PaceClock"
 include(":app")
+ 
