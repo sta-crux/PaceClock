@@ -30,7 +30,7 @@ class MainViewDrawer(private val mainContext: AppCompatActivity) {
         setClockFace()
         setsVisibility()
         val clockHandles = mainContext.findViewById<ImageView>(R.id.clockHandles)
-        RotationHelper.setupQuarterRotations(clockHandles, mainContext)
+        RotationHelper(mainContext).setupQuarterRotations(clockHandles, mainContext)
         setAndroidSystemBarsColor(mainContext)
     }
 
