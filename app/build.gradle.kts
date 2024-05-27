@@ -11,8 +11,8 @@ android {
         applicationId = "com.sta.crux.paceclock"
         minSdk = 29
         targetSdk = 34
-        versionCode = 2024526
-        versionName = "2024526"
+        versionCode = 2024527
+        versionName = "2024527"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
