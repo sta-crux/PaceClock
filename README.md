@@ -1,8 +1,9 @@
+﻿# Pace Clock for Android
 **Play Store link**
 
 https://play.google.com/store/apps/details?id=com.sta.crux.paceclock
 
-**Pace Clock for Android**
+
 
 Swimmers use the pace clock to time their laps, track rest intervals, and ensure they maintain a consistent pace throughout their workouts. It's an essential tool for both swimmers and coaches to monitor and improve performance. 🏊‍♂️🏊‍♀️
 It can be used also to pace other exercises or just tracking short amount of time.
